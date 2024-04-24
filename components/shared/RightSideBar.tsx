@@ -27,11 +27,11 @@ const hotQuestions = [
 ];
 
 const popularTags = [
-  { _id: 1, name: "javascript", totalQuestions: 100 },
-  { _id: 2, name: "react", totalQuestions: 18 },
-  { _id: 3, name: "next.js", totalQuestions: 25 },
-  { _id: 4, name: "svelte", totalQuestions: 9 },
-  { _id: 5, name: "dsa", totalQuestions: 14 },
+  { _id: '1', name: "javascript", totalQuestions: 100 },
+  { _id: '2', name: "react", totalQuestions: 18 },
+  { _id: '3', name: "next.js", totalQuestions: 25 },
+  { _id: '4', name: "svelte", totalQuestions: 9 },
+  { _id: '5', name: "dsa", totalQuestions: 14 },
 ];
 
 const RightSideBar = () => {
