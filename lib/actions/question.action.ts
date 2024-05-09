@@ -4,7 +4,11 @@ import Tag from "@/models/tag.model";
 import User from "@/models/user.model";
 import Question from "@/models/question.model";
 import { connectToDatabase } from "../mongoose";
-import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
+import {
+  CreateQuestionParams,
+  GetQuestionByIdParams,
+  GetQuestionsParams,
+} from "./shared.types";
 import { revalidatePath } from "next/cache";
 
 export async function getQuestions(params: GetQuestionsParams) {
@@ -20,7 +24,7 @@ export async function getQuestions(params: GetQuestionsParams) {
         model: User,
       })
       .sort({ createdAt: -1 });
-      
+
     return { questions };
   } catch (error) {
     console.log(error);
@@ -65,5 +69,29 @@ export async function createQuestion(params: CreateQuestionParams) {
 
     // Increment author's reputaion by +5 for creating a question
     revalidatePath(path);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getQuestionById(params: GetQuestionByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId } = params;
+
+    const question = await Question.findById(questionId)
+      .populate({ path: "tags", model: Tag, select: "_id name" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId name picture",
+      });
+
+    return question;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
